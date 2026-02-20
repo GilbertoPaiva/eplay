@@ -7,7 +7,7 @@ import Gallery from '../../components/Gallery'
 import residentEvil from '../../assets/images/resident.png'
 
 const Product = () => {
-  const { id } = useParams()
+  useParams()
 
   return (
     <>
