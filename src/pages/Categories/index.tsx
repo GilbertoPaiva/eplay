@@ -1,104 +1,58 @@
 import ProductsList from '../../components/ProductsList'
-import Game from '../../models/Game'
 
-import resident from '../../assets/images/resident.png'
-import diablo from '../../assets/images/diablo.png'
-import zelda from '../../assets/images/zelda.png'
-import starWars from '../../assets/images/star_wars.png'
+import { Game } from '../Home'
+import { useEffect, useState } from 'react'
 
-const promocoes: Game[] = [
-  {
-    id: 1,
-    title: 'Resident Evil 4',
-    category: 'Ação',
-    system: 'PS4',
-    description:
-      'O clássico jogo de terror de sobrevivência retorna com gráficos e jogabilidade aprimorados. Enfrente hordas de inimigos e descubra os segredos sombrios de uma vila infestada.',
-    image: resident,
-    infos: ['10%', 'R$ 179,99']
-  },
-  {
-    id: 2,
-    title: 'Resident Evil 4',
-    category: 'Ação',
-    system: 'PS4',
-    description:
-      'O clássico jogo de terror de sobrevivência retorna com gráficos e jogabilidade aprimorados. Enfrente hordas de inimigos e descubra os segredos sombrios de uma vila infestada.',
-    image: resident,
-    infos: ['10%', 'R$ 179,99']
-  },
-  {
-    id: 3,
-    title: 'Resident Evil 4',
-    category: 'Ação',
-    system: 'PS4',
-    description:
-      'O clássico jogo de terror de sobrevivência retorna com gráficos e jogabilidade aprimorados. Enfrente hordas de inimigos e descubra os segredos sombrios de uma vila infestada.',
-    image: resident,
-    infos: ['10%', 'R$ 179,99']
-  },
-  {
-    id: 4,
-    title: 'Resident Evil 4',
-    category: 'Ação',
-    system: 'PS4',
-    description:
-      'O clássico jogo de terror de sobrevivência retorna com gráficos e jogabilidade aprimorados. Enfrente hordas de inimigos e descubra os segredos sombrios de uma vila infestada.',
-    image: resident,
-    infos: ['10%', 'R$ 179,99']
-  }
-]
+const Categories = () => {
+  const [gamesAcao, setGamesAcao] = useState<Game[]>([])
+  const [gamesEsportes, setGamesEsportes] = useState<Game[]>([])
+  const [gamesSimulacao, setGamesSimulacao] = useState<Game[]>([])
+  const [gamesLuta, setGamesLuta] = useState<Game[]>([])
+  const [gamesRpg, setGamesRpg] = useState<Game[]>([])
 
-const emBreve: Game[] = [
-  {
-    id: 5,
-    title: 'Diablo III',
-    category: 'RPG',
-    system: 'PC',
-    description:
-      'Mergulhe em um mundo de escuridão e caos enquanto enfrenta hordas de demônios e monstros. Personalize seu personagem, colete itens poderosos e desafie chefes épicos.',
-    image: diablo,
-    infos: ['20%', 'R$ 79,99']
-  },
-  {
-    id: 6,
-    title: 'The Legend of Zelda: Breath of the Wild',
-    category: 'Aventura',
-    system: 'Nintendo Switch',
-    description:
-      'Explore um vasto mundo aberto cheio de segredos, quebra-cabeças e inimigos desafiadores. Use suas habilidades para sobreviver e salvar o reino de Hyrule.',
-    image: zelda,
-    infos: ['15%', 'R$ 249,99']
-  },
-  {
-    id: 7,
-    title: 'Star Wars Jedi: Fallen Order',
-    category: 'Ação/Aventura',
-    system: 'PS4',
-    description:
-      'Assuma o papel de um jovem Padawan em fuga após a Ordem 66. Explore planetas icônicos, enfrente inimigos perigosos e descubra os segredos da Força.',
-    image: starWars,
-    infos: ['25%', 'R$ 149,99']
-  },
-  {
-    id: 8,
-    title: 'Resident Evil 4',
-    category: 'Ação',
-    system: 'PS4',
-    description:
-      'O clássico jogo de terror de sobrevivência retorna com gráficos e jogabilidade aprimorados. Enfrente hordas de inimigos e descubra os segredos sombrios de uma vila infestada.',
-    image: resident,
-    infos: ['10%', 'R$ 179,99']
-  }
-]
+  useEffect(() => {
+    fetch('https://api-ebac.vercel.app/api/eplay/luta')
+      .then((res) => res.json())
+      .then((res) => setGamesLuta(res))
+  }, [])
 
-const Categories = () => (
-  <>
-    <ProductsList games={promocoes} title="RPG" background="gray" />
-    <ProductsList games={emBreve} title="Ação" background="black" />
-    <ProductsList games={promocoes} title="Aventura" background="gray" />
-    <ProductsList games={emBreve} title="Fps" background="black" />
-  </>
-)
+  useEffect(() => {
+    fetch('https://api-ebac.vercel.app/api/eplay/rpg')
+      .then((res) => res.json())
+      .then((res) => setGamesRpg(res))
+  }, [])
+
+  useEffect(() => {
+    fetch('https://api-ebac.vercel.app/api/eplay/esportes')
+      .then((res) => res.json())
+      .then((res) => setGamesEsportes(res))
+  }, [])
+
+  useEffect(() => {
+    fetch('https://api-ebac.vercel.app/api/eplay/simulacao')
+      .then((res) => res.json())
+      .then((res) => setGamesSimulacao(res))
+  }, [])
+
+  useEffect(() => {
+    fetch('https://api-ebac.vercel.app/api/eplay/acao')
+      .then((res) => res.json())
+      .then((res) => setGamesAcao(res))
+  }, [])
+
+  return (
+    <>
+      <ProductsList games={gamesAcao} title="Ação" background="black" />
+      <ProductsList games={gamesEsportes} title="Esportes" background="gray" />
+      <ProductsList games={gamesLuta} title="Luta" background="black" />
+      <ProductsList games={gamesRpg} title="RPG" background="gray" />
+      <ProductsList
+        games={gamesSimulacao}
+        title="Simulação"
+        background="black"
+      />
+    </>
+  )
+}
 
 export default Categories
