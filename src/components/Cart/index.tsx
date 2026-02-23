@@ -26,7 +26,7 @@ const Cart = () => {
 
   const getTotalPrice = () => {
     return items.reduce((acumulador, valorAtual) => {
-      return (acumulador += valorAtual.prices.current!)
+      return (acumulador += valorAtual.prices.current)
     }, 0)
   }
 
